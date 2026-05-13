@@ -11,19 +11,19 @@ export const registerUser = (data) =>
 export const loginUser = (data) =>
   API.post("/auth/login", data);
 
-// EXPENSES
+// EXPENSES (FIXED)
 export const addExpense = (data) =>
-  API.post("/expense", data);
+  API.post("/expenses", data);
 
 export const getExpenses = () =>
-  API.get("/expense");
+  API.get("/expenses");
 
-// DONATIONS / INCOME
+// DONATIONS (FIXED)
 export const addIncome = (data) =>
-  API.post("/income", data);
+  API.post("/donations", data);
 
 export const getIncome = () =>
-  API.get("/income");
+  API.get("/donations");
 
 // SUMMARY
 export const getSummary = () =>

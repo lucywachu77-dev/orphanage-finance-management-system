@@ -4,7 +4,7 @@ import { addExpense, getExpenses } from "../services/api";
 function Expenses() {
   const [form, setForm] = useState({
     category: "",
-    amount: "",
+    amount: 0,
     description: "",
   });
 
@@ -12,8 +12,12 @@ function Expenses() {
 
   // 📥 Load expenses from backend
   const loadExpenses = async () => {
-    const res = await getExpenses();
-    setExpenses(res.data);
+    try {
+      const res = await getExpenses();
+      setExpenses(res.data);
+    } catch (error) {
+      console.log("Fetch error:", error);
+    }
   };
 
   useEffect(() => {
@@ -24,21 +28,28 @@ function Expenses() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await addExpense(form);
+    try {
+      await addExpense({
+        ...form,
+        amount: Number(form.amount),
+      });
 
-    setForm({
-      category: "",
-      amount: "",
-      description: "",
-    });
+      setForm({
+        category: "",
+        amount: 0,
+        description: "",
+      });
 
-    loadExpenses();
+      loadExpenses();
+    } catch (error) {
+      console.log("Add expense error:", error);
+    }
   };
 
   // 🗑️ Delete expense
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/expense/${id}`, {
+      await fetch(`http://localhost:5000/api/expenses/${id}`, {
         method: "DELETE",
       });
 

@@ -1,6 +1,7 @@
-importt { useEffect, useState } from "react";importtStatsCardd from "../components/StatsCard";
-importFinanceChartt from "../components/FinanceChart";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import StatsCard from "../components/StatsCard";
+import FinanceChart from "../components/FinanceChart";
 
 const Dashboard = () => {
   const [donations, setDonations] = useState(0);
@@ -9,8 +10,13 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const donationRes = await axios.get("http://localhost:5000/api/donations");
-        const expenseRes = await axios.get("http://localhost:5000/api/expenses");
+        const donationRes = await axios.get(
+          "http://localhost:5000/api/donations"
+        );
+
+        const expenseRes = await axios.get(
+          "http://localhost:5000/api/expenses"
+        );
 
         const totalDonations = donationRes.data.reduce(
           (sum, item) => sum + item.amount,

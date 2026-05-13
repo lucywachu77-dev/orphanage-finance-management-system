@@ -1,9 +1,9 @@
+const dotenv = require("dotenv");
+dotenv.config({ path: "./.env" }); // 👈 FORCE correct loading FIRST
+
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-
-dotenv.config();
 
 const app = express();
 
@@ -16,30 +16,35 @@ const incomeRoutes = require("./routes/incomeRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
 const summaryRoutes = require("./routes/summaryRoutes");
 const authRoutes = require("./routes/authRoutes");
-const childRoutes = require("./routes/childRoutes"); // ✅ only once
+const childRoutes = require("./routes/childRoutes");
 
 // Use Routes
 app.use("/api/income", incomeRoutes);
 app.use("/api/expense", expenseRoutes);
 app.use("/api/summary", summaryRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/children", childRoutes); // ✅ only once
+app.use("/api/children", childRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
   res.send("Orphanage Finance Management System API is running...");
 });
 
-// Connect MongoDB + Start Server
+// 🔥 DEBUG (VERY IMPORTANT)
+console.log("MONGO_URI =", process.env.MONGO_URI);
+
+// MongoDB Connection + Server
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connected");
 
-    app.listen(process.env.PORT || 5000, () => {
-      console.log("Server running on port 5000");
+    const PORT = process.env.PORT || 5000;
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
     });
   })
   .catch((error) => {
-    console.log("Database connection error:", error);
+    console.log("Database connection error:", error.message);
   });
