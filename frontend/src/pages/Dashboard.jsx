@@ -1,20 +1,5 @@
-function Dashboard() {
-  return (
-    <div style={{ padding: "20px" }}>
-      <h1>Dashboard</h1>
-
-      <div>
-        <h3>Welcome to Orphanage Finance System</h3>
-        <p>You are successfully logged in.</p>
-      </div>
-    </div>
-  );
-};
-
-
-import { useEffect, useState } from "react";
-import StatsCard from "../components/StatsCard";
-import FinanceChart from "../components/FinanceChart";
+importt { useEffect, useState } from "react";importtStatsCardd from "../components/StatsCard";
+importFinanceChartt from "../components/FinanceChart";
 import axios from "axios";
 
 const Dashboard = () => {
