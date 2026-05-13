@@ -52,8 +52,6 @@ const getExpenses = async (req, res) => {
   }
 };
 
-module.exports = { addExpense, getExpenses };
-
 module.exports = {
   addExpense,
   getExpenses,

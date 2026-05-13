@@ -1,22 +1,7 @@
-function Dashboard() {
-  return (
-    <div style={{ padding: "20px" }}>
-      <h1>Dashboard</h1>
-
-      <div>
-        <h3>Welcome to Orphanage Finance System</h3>
-        <p>You are successfully logged in.</p>
-      </div>
-    </div>
-  );
-}
-
-export default Dashboard;
-
 import { useEffect, useState } from "react";
+import axios from "axios";
 import StatsCard from "../components/StatsCard";
 import FinanceChart from "../components/FinanceChart";
-import axios from "axios";
 
 const Dashboard = () => {
   const [donations, setDonations] = useState(0);
@@ -25,8 +10,13 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const donationRes = await axios.get("http://localhost:5000/api/donations");
-        const expenseRes = await axios.get("http://localhost:5000/api/expenses");
+        const donationRes = await axios.get(
+          "http://localhost:5000/api/donations"
+        );
+
+        const expenseRes = await axios.get(
+          "http://localhost:5000/api/expenses"
+        );
 
         const totalDonations = donationRes.data.reduce(
           (sum, item) => sum + item.amount,
