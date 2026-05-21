@@ -1,34 +1,18 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import StatsCard from "../components/StatsCard";
 import FinanceChart from "../components/FinanceChart";
+import { getSummary } from "../services/api";
 
-const Dashboard = () => {
+function Dashboard() {
   const [donations, setDonations] = useState(0);
   const [expenses, setExpenses] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const donationRes = await axios.get(
-          "http://localhost:5000/api/donations",
-        );
-        const expenseRes = await axios.get(
-          "http://localhost:5000/api/expenses",
-        );
-
-        const totalDonations = donationRes.data.reduce(
-          (sum, item) => sum + item.amount,
-          0,
-        );
-
-        const totalExpenses = expenseRes.data.reduce(
-          (sum, item) => sum + item.amount,
-          0,
-        );
-
-        setDonations(totalDonations);
-        setExpenses(totalExpenses);
+        const res = await getSummary();
+        setDonations(res.data.totalIncome ?? 0);
+        setExpenses(res.data.totalExpenses ?? 0);
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
       }
@@ -52,6 +36,6 @@ const Dashboard = () => {
       <FinanceChart donations={donations} expenses={expenses} />
     </div>
   );
-};
+}
 
 export default Dashboard;
